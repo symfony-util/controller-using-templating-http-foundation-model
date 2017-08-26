@@ -11,7 +11,7 @@
 
 namespace SymfonyUtil\Controller\TemplatingFoundationModel;
 
-use PhpObjectInterfaces\Model\TraversableListInterface;
+use ...\TraversableIndexInterface; // Needs another interface .../HttpFoundation/TraversableIndexInterface
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Templating\EngineInterface;
 
@@ -38,9 +38,6 @@ class PagerIndexController
         Request $request = new Request()
     )
     {
-        return new Response($this->templating->render($this->template, ['model' => $this->model->traversableList([
-            'currentPage' => $request->query->getInt('page', 1), // Could be parametrized or generalized!
-            'maxPerPage' => $this->maxPerPage,
-        ])));
+        return new Response($this->templating->render($this->template, ['model' => $this->model->traversableList($request)));
     }
 }
